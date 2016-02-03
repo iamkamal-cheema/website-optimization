@@ -37,15 +37,22 @@ Part 1: Optimize PageSpeed Insights score for index.html
 Optimizations:
 
 Download optimized assets from google page insights to fix pizzeria.img
+
 Inline css/style.css
+
 Make google-analytics script async
+
 Add a media query for print.css
+
 Use Web Font Loader to load the Google webfont asynchronously
+
 Use Gulp to:
-Minify CSS
-Uglify JS
+Minify CSS,
+Uglify JS,
 Minify HTML
+
 Sources: https://teamtreehouse.com/library/gulp-basics
+
 https://github.com/typekit/webfontloader
 
 Part 2: Optimize Frames per Second in main.js
@@ -53,49 +60,64 @@ Part 2: Optimize Frames per Second in main.js
 Optimizations:
 
 Use requestAnimationFrame for updatePositions
+
 Move all constants out of the for loop in updatePositions
+
 Switch to document.getElementById instead of document.querySelector in function determineDx
+
 Declare var phase outside the for loop on line 561 to prevent it from being created each iteration
+
 Declare var elem outside the loop on line 599 to prevent it being created each iteration
+
 Declare movingPizzas outside the for loop to prevent a DOM call on each iteration
+
 Move the Math.sin calculation out for the for loop in updatePositions
+
 Move var items = document.getElementsByClassName('mover'); to the anonymous function at the bottom of the file to stop updatePositions from re-defining items on every scroll event
-Use window.items[i].style.left = items[i].basicLeft + 100 * phase + 'px'; instead of items...
-Set number of pizzas to 36 in document.addEventListener('DOMContentLoaded', function()
+
 Replace "querySelector" with getElementById in document.getElementById("movingPizzas1").appendChild(elem);
-Sources: https://github.com/lacyjpr/optimization/ https://discussions.udacity.com/t/p4-pizza-scrolling-rasterize-paint/30713/13 https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById
+
+Sources: https://github.com/lacyjpr/optimization/
+
+https://discussions.udacity.com/t/p4-pizza-scrolling-rasterize-paint/30713/13
+
+https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById
 
 Part 3: Optimize Time to Resize Pizzas in main.js
 
 Optimizations:
 
 Made the following changes to changePizzaSizes:
+
 Move document.document.querySelectorAll(".randomPizzaContainer"); outside the for loop
+
 Refactor to use a switch to set pizza width in order to avoid Forced Synchronous Layout and avoid use of determineDx to determine new pizza widths
+
 Move var pizzasDiv = document.getElementById("randomPizzas"); out of the for loop on line 498 so the loop only makes one DOM call
+
 Change CSS for .randomPizzaContainer: Add transform: translateZ(0); and will-change: transform;
+
 Switch to document.getElementsByClassName from document.querySelectorAll in this line of changePizzaSizes var randomPizzas = document.getElementsByClassName("randomPizzaContainer");
+
 Move randomPizzas.length to a local variable so the array's length property isn't accessed on each iteration
+
 Source: https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByClassName https://www.udacity.com/course/viewer#!/c-nd001/l-5988439100/m-6379192090
 
 The portfolio was built on Twitter's Bootstrap framework. All custom styles are in dist/css/portfolio.css in the portfolio repo.
 
-Bootstrap's CSS Classes
-Bootstrap's Components
+Bootstrap's CSS Classes,
+Bootstrap's Components,
 Sample Portfolios
 
 
 
-A great discussion about portfolios on reddit
+
 http://ianlunn.co.uk/
+
 http://www.adhamdannaway.com/portfolio
+
 http://www.timboelaars.nl/
+
 http://futoryan.prosite.com/
+
 http://playonpixels.prosite.com/21591/projects
-http://colintrenter.prosite.com/
-http://calebmorris.prosite.com/
-http://www.cullywright.com/
-http://yourjustlucky.com/
-http://nicoledominguez.com/portfolio/
-http://www.roxannecook.com/
-http://www.84colors.com/portfolio.html
