@@ -75,6 +75,9 @@ Move the Math.sin calculation out for the for loop in updatePositions
 
 Move var items = document.getElementsByClassName('mover'); to the anonymous function at the bottom of the file to stop updatePositions from re-defining items on every scroll event
 
+To make rotation and translation work in background pizzas, use
+     items[i].style.transform = 'translateX(' + 100 * phase + 'px)'; on line 549
+
 Replace "querySelector" with getElementById in document.getElementById("movingPizzas1").appendChild(elem);
 
 Sources: https://github.com/lacyjpr/optimization/
