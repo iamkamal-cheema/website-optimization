@@ -1,73 +1,91 @@
-## Website Performance Optimization portfolio project
+Website Performance Optimization portfolio project
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
+To run, you can either navigate to http://79.170.40.53/kamal-cheema-uow.com/optimize/dist/, or Download the project on your machine.
 
-To get started, check out the repository, inspect the code,
+optimized files are in dist directory.
 
-### Getting started
+I have optimized index.html to achieve at least a 90 PageSpeed score. I've optimized the JavaScript in pizza.html to achieve a frame rate of 60fps when scrolling. I've also reduced the time to resize pizzas in pizza.html to less than 5 ms.
 
-####Part 1: Optimize PageSpeed Insights score for index.html
+Optimization Tips and Tricks
 
-Some useful tips to help you get started:
+Optimizing Performance
+Analyzing the Critical Rendering Path
+Optimizing the Critical Rendering Path
+Avoiding Rendering Blocking CSS
+Optimizing JavaScript
+Measuring with Navigation Timing. We didn't cover the Navigation Timing API in the first two lessons but it's an incredibly useful tool for automated page profiling. I highly recommend reading.
+The fewer the downloads, the better
+Reduce the size of text
+Optimize images
+HTTP caching
+Customization with Bootstrap
 
-1. Check out the repository
-1. To inspect the site on your phone, you can run a local server
 
-  ```bash
-  $> cd /path/to/your-project-folder
-  $> python -m SimpleHTTPServer 8080
-  ```
 
-1. Open a browser and visit localhost:8080
-1. Download and install [ngrok](https://ngrok.com/) to make your local server accessible remotely.
+Part 1: Optimize PageSpeed Insights score for index.html
 
-  ``` bash
-  $> cd /path/to/your-project-folder
-  $> ngrok http 8080
-  ```
+Optimizations:
 
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
+Download optimized assets from google page insights to fix pizzeria.img
+Inline css/style.css
+Make google-analytics script async
+Add a media query for print.css
+Use Web Font Loader to load the Google webfont asynchronously
+Use Gulp to:
+Minify CSS
+Uglify JS
+Minify HTML
+Sources: https://teamtreehouse.com/library/gulp-basics
+https://github.com/typekit/webfontloader
 
-Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
+Part 2: Optimize Frames per Second in main.js
 
-####Part 2: Optimize Frames per Second in pizza.html
+Optimizations:
 
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
+Use requestAnimationFrame for updatePositions
+Move all constants out of the for loop in updatePositions
+Switch to document.getElementById instead of document.querySelector in function determineDx
+Declare var phase outside the for loop on line 561 to prevent it from being created each iteration
+Declare var elem outside the loop on line 599 to prevent it being created each iteration
+Declare movingPizzas outside the for loop to prevent a DOM call on each iteration
+Move the Math.sin calculation out for the for loop in updatePositions
+Move var items = document.getElementsByClassName('mover'); to the anonymous function at the bottom of the file to stop updatePositions from re-defining items on every scroll event
+Use window.items[i].style.left = items[i].basicLeft + 100 * phase + 'px'; instead of items...
+Set number of pizzas to 36 in document.addEventListener('DOMContentLoaded', function()
+Replace "querySelector" with getElementById in document.getElementById("movingPizzas1").appendChild(elem);
+Sources: https://github.com/lacyjpr/optimization/ https://discussions.udacity.com/t/p4-pizza-scrolling-rasterize-paint/30713/13 https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById
 
-You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
+Part 3: Optimize Time to Resize Pizzas in main.js
 
-### Optimization Tips and Tricks
-* [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
-* [Analyzing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/analyzing-crp.html "analyzing crp")
-* [Optimizing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/optimizing-critical-rendering-path.html "optimize the crp!")
-* [Avoiding Rendering Blocking CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css.html "render blocking css")
-* [Optimizing JavaScript](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript.html "javascript")
-* [Measuring with Navigation Timing](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp.html "nav timing api"). We didn't cover the Navigation Timing API in the first two lessons but it's an incredibly useful tool for automated page profiling. I highly recommend reading.
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/eliminate-downloads.html">The fewer the downloads, the better</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer.html">Reduce the size of text</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization.html">Optimize images</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
+Optimizations:
 
-### Customization with Bootstrap
-The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstrap</a> framework. All custom styles are in `dist/css/portfolio.css` in the portfolio repo.
+Made the following changes to changePizzaSizes:
+Move document.document.querySelectorAll(".randomPizzaContainer"); outside the for loop
+Refactor to use a switch to set pizza width in order to avoid Forced Synchronous Layout and avoid use of determineDx to determine new pizza widths
+Move var pizzasDiv = document.getElementById("randomPizzas"); out of the for loop on line 498 so the loop only makes one DOM call
+Change CSS for .randomPizzaContainer: Add transform: translateZ(0); and will-change: transform;
+Switch to document.getElementsByClassName from document.querySelectorAll in this line of changePizzaSizes var randomPizzas = document.getElementsByClassName("randomPizzaContainer");
+Move randomPizzas.length to a local variable so the array's length property isn't accessed on each iteration
+Source: https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByClassName https://www.udacity.com/course/viewer#!/c-nd001/l-5988439100/m-6379192090
 
-* <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
-* <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
+The portfolio was built on Twitter's Bootstrap framework. All custom styles are in dist/css/portfolio.css in the portfolio repo.
 
-### Sample Portfolios
+Bootstrap's CSS Classes
+Bootstrap's Components
+Sample Portfolios
 
-Feeling uninspired by the portfolio? Here's a list of cool portfolios I found after a few minutes of Googling.
 
-* <a href="http://www.reddit.com/r/webdev/comments/280qkr/would_anybody_like_to_post_their_portfolio_site/">A great discussion about portfolios on reddit</a>
-* <a href="http://ianlunn.co.uk/">http://ianlunn.co.uk/</a>
-* <a href="http://www.adhamdannaway.com/portfolio">http://www.adhamdannaway.com/portfolio</a>
-* <a href="http://www.timboelaars.nl/">http://www.timboelaars.nl/</a>
-* <a href="http://futoryan.prosite.com/">http://futoryan.prosite.com/</a>
-* <a href="http://playonpixels.prosite.com/21591/projects">http://playonpixels.prosite.com/21591/projects</a>
-* <a href="http://colintrenter.prosite.com/">http://colintrenter.prosite.com/</a>
-* <a href="http://calebmorris.prosite.com/">http://calebmorris.prosite.com/</a>
-* <a href="http://www.cullywright.com/">http://www.cullywright.com/</a>
-* <a href="http://yourjustlucky.com/">http://yourjustlucky.com/</a>
-* <a href="http://nicoledominguez.com/portfolio/">http://nicoledominguez.com/portfolio/</a>
-* <a href="http://www.roxannecook.com/">http://www.roxannecook.com/</a>
-* <a href="http://www.84colors.com/portfolio.html">http://www.84colors.com/portfolio.html</a>
+
+A great discussion about portfolios on reddit
+http://ianlunn.co.uk/
+http://www.adhamdannaway.com/portfolio
+http://www.timboelaars.nl/
+http://futoryan.prosite.com/
+http://playonpixels.prosite.com/21591/projects
+http://colintrenter.prosite.com/
+http://calebmorris.prosite.com/
+http://www.cullywright.com/
+http://yourjustlucky.com/
+http://nicoledominguez.com/portfolio/
+http://www.roxannecook.com/
+http://www.84colors.com/portfolio.html
