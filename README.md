@@ -9,15 +9,25 @@ I have optimized index.html to achieve at least a 90 PageSpeed score. I've optim
 Optimization Tips and Tricks
 
 Optimizing Performance
+
 Analyzing the Critical Rendering Path
+
 Optimizing the Critical Rendering Path
+
 Avoiding Rendering Blocking CSS
+
 Optimizing JavaScript
+
 Measuring with Navigation Timing. We didn't cover the Navigation Timing API in the first two lessons but it's an incredibly useful tool for automated page profiling. I highly recommend reading.
+
 The fewer the downloads, the better
+
 Reduce the size of text
+
 Optimize images
+
 HTTP caching
+
 Customization with Bootstrap
 
 
